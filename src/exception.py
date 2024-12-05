@@ -1,6 +1,7 @@
 import logging
 import sys
 from types import TracebackType
+from src.logger import logging
 
 
 def error_message_detail(error, exc_tb: TracebackType):
