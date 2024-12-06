@@ -40,7 +40,4 @@ class DataIngestion:
             
 if __name__ == "__main__":
     obj = DataIngestion()
-    f = os.path.dirname(__file__)
-    
-    os.makedirs(os.path.join(f,"z"), exist_ok=True)
-    print(os.path.dirname(obj.ingestion_config.train_data_path))
+
