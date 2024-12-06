@@ -20,12 +20,15 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys.exc_info()[2])
     
-def evaluate_models(X_train: np.ndarray, y_train: np.ndarray, X_test: np.ndarray, y_test: np.ndarray, models:dict):
+def evaluate_models(X_train: np.ndarray, y_train: np.ndarray, X_test: np.ndarray, y_test: np.ndarray, models:dict, params:dict):
     try:
         models_report = {}
         for name, model in models.items():
-            model.fit(X_train, y_train) # Train model
-
+            model_params = params[name]
+            gs = GridSearchCV(model, model_params,cv=3, verbose=False,)
+            gs.fit(X_train, y_train)
+            model.set_params(**gs.best_params_)
+            model.fit(X_train, y_train)
             # Make predictions
             y_train_pred = model.predict(X_train)
             y_test_pred = model.predict(X_test)
