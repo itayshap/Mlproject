@@ -4,14 +4,16 @@ from types import TracebackType
 from src.logger import logging
 
 
-def error_message_detail(error, exc_tb: TracebackType):
+def error_message_detail(error, exc_tb: TracebackType|None):
+    if exc_tb is None:
+         return error
     file_name = exc_tb.tb_frame.f_code.co_filename
     error_message=f"Error occured in python script name[{file_name}] line number [{exc_tb.tb_lineno}] error message [{str(error)}]"
 
     return error_message
 
 class CustomException(Exception):
-    def __init__(self, error_messge, error_detail:TracebackType) -> None:
+    def __init__(self, error_messge, error_detail:TracebackType|None) -> None:
         super().__init__(error_messge)
         self.error_message = error_message_detail(error_messge,error_detail)
     
